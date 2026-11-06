@@ -41,6 +41,7 @@ export default function VisionAsciiPortrait() {
     let openPixels: Uint8ClampedArray | null = null;
     let shutPixels: Uint8ClampedArray | null = null;
     let columns = 0; let rows = 0; let cellWidth = 0; let cellHeight = 0; let fontSize = 0;
+    let measuredWidth = 0;
     let paper = [247, 247, 244]; let ink = '#22231f'; let muted = '#777870';
     let start = performance.now(); let last = 0; let frame = 0; let visible = true; let disposed = false;
 
@@ -57,6 +58,7 @@ export default function VisionAsciiPortrait() {
     const layout = () => {
       const rect = canvas.getBoundingClientRect();
       if (!rect.width) return;
+      measuredWidth = rect.width;
       fontSize = Math.max(6, Math.min(10, rect.width * 0.02));
       out.font = `${fontSize}px "DM Mono", monospace`;
       cellWidth = out.measureText('M').width;
@@ -163,7 +165,12 @@ export default function VisionAsciiPortrait() {
       if (!visible && frame) { cancelAnimationFrame(frame); frame = 0; }
     }, { threshold: 0.01 });
     intersection.observe(host);
-    const resize = new ResizeObserver(() => { layout(); if (!frame && visible && !reduced.matches) frame = requestAnimationFrame(update); else if (reduced.matches) update(performance.now()); });
+    const resize = new ResizeObserver(([entry]) => {
+      if (Math.abs(entry.contentRect.width - measuredWidth) < 0.5) return;
+      layout();
+      if (!frame && visible && !reduced.matches) frame = requestAnimationFrame(update);
+      else if (reduced.matches) update(performance.now());
+    });
     resize.observe(host);
     const theme = new MutationObserver(() => { palette(); if (reduced.matches) update(performance.now()); });
     theme.observe(document.body, { attributes: true, attributeFilter: ['class'] });
