@@ -7,3 +7,4 @@ coverage/
 replit.nix
 .env*
 !.env.example
+.vercel
