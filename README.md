@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/moon-sketch.svg" alt="Ilustração original de uma garota lunar sorrindo e piscando, desenhada em linhas de caderno" width="240" />
+  <img src="assets/sailor-moon.png" alt="Sailor Moon sorrindo e piscando, isolada em fundo transparente" width="240" />
 
   <h1>draw</h1>
   <p><strong>From a sketch on paper to a digital idea in motion.</strong></p>
