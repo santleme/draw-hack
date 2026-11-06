@@ -1,0 +1,12 @@
+{
+  "name": "draw-hack",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev": "npm run dev --workspace @draw/site",
+    "build": "npm run build --workspace @draw/site",
+    "preview": "npm run preview --workspace @draw/site"
+  }
+}

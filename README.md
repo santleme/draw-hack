@@ -33,13 +33,18 @@ Ideas often begin as a few lines on a page, while the tools for developing them 
 
 ## The road ahead
 
-Draw is an early-stage project being shaped for a hackathon. **The webcam-and-AI experience is the core direction; CAD and simulation integrations are future goals.** This repository will grow into a monorepo as the project takes shape. For now, it introduces the idea and the direction.
+Draw is an early-stage project being shaped for a hackathon. **The webcam-and-AI experience is the core direction; CAD and simulation integrations are future goals.** This repository is a monorepo, with the rebuilt website as its first application.
 
-Planned areas may include:
+The website brings together three routes: a home page with an archive of consequential drawings and a local sketch pad, an editorial vision page, and a product page.
 
-- `apps/` — user-facing experiences
-- `packages/` — shared capture and drawing tools
-- `integrations/` — connections to CAD and simulation software
+## Run the website
+
+```sh
+npm install
+npm run dev
+```
+
+The site is served locally by Vite. Its source lives in `apps/site`; shared product packages and integrations can be added as the project grows.
 
 ## Project
 
