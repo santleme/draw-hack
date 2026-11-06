@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="440" viewBox="0 0 480 440" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Moonlit sketch</title>
+  <desc id="desc">A hand-drawn, original moon princess character smiling and winking beneath a crescent moon.</desc>
+  <rect width="480" height="440" rx="36" fill="#F7F7F4"/>
+  <path d="M42 365.5H438" stroke="#E7DFA1" stroke-width="2" stroke-linecap="round"/>
+  <path d="M89 112c-13-13-17-31-12-48 4-14 15-26 30-31-6 12-7 25-3 38 5 17 18 29 34 34-17 12-37 14-49 7Z" stroke="#C9B85E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m134 76 4 9 10 1-8 6 2 10-8-6-9 5 4-9-7-7 10 1 2-10ZM373 108l3 7 8 1-6 5 2 8-7-5-7 4 3-8-6-5 8 1 2-8ZM354 63l2 5 6 1-5 4 1 6-5-4-6 3 2-5-4-4h6l3-6Z" fill="#E7DFA1" stroke="#C9B85E" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- loose twin tails -->
+  <path d="M169 210c-29 16-48 43-53 76-4 24 2 43 16 54 5-25 16-40 37-48M311 210c29 16 48 43 53 76 4 24-2 43-16 54-5-25-16-40-37-48" stroke="#80698E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M163 244c-24 20-35 47-32 75M317 244c24 20 35 47 32 75" stroke="#B7A2BF" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- head and neck -->
+  <path d="M171 177c0-49 30-80 69-80s69 31 69 80v33c0 41-31 70-69 70s-69-29-69-70v-33Z" fill="#F0D5C3" stroke="#5C514B" stroke-width="3.5" stroke-linejoin="round"/>
+  <!-- fringe -->
+  <path d="M169 185c-4-48 15-87 56-98 35-10 72 7 85 38 8 18 6 39 0 58-8-15-18-25-30-32-14 13-32 19-52 19-19 0-37-7-52-20l-7 35Z" fill="#E5C16F" stroke="#5C514B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M185 156c15 14 33 21 53 21 21 0 39-7 55-22" stroke="#F4D98B" stroke-width="3" stroke-linecap="round"/>
+  <!-- tiny crescent tiara -->
+  <path d="m218 123 22-18 22 18-22 8-22-8Z" fill="#F7F7F4" stroke="#5C514B" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="240" cy="123" r="4" fill="#D78183"/>
+  <!-- open eye and wink -->
+  <path d="M194 199c6-10 17-12 25-2M261 198c8-10 19-8 25 2" stroke="#4C4440" stroke-width="4" stroke-linecap="round"/>
+  <path d="M196 200c4-5 11-6 16-1" stroke="#80698E" stroke-width="2" stroke-linecap="round"/>
+  <path d="M267 199c6 5 13 5 18 0" stroke="#4C4440" stroke-width="4" stroke-linecap="round"/>
+  <path d="M237 210c2 2 4 2 6 0" stroke="#B98472" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M227 225c8 10 20 12 30 1" stroke="#A75E65" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M190 216c5 3 10 4 15 3M275 218c5 0 9-2 13-5" stroke="#D78183" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- sailor collar and shoulders -->
+  <path d="M179 271c-24 7-42 28-49 57l-10 37h240l-10-37c-7-29-25-50-49-57l-18 35-43 19-43-19-18-35Z" fill="#9FAFC0" stroke="#5C514B" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="m195 277 45 47 45-47-14 39-31 22-31-22-14-39Z" fill="#F7F7F4" stroke="#5C514B" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M217 331c5-7 13-10 23-10s18 3 23 10l-6 21h-34l-6-21Z" fill="#D78183" stroke="#5C514B" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="240" cy="333" r="5" fill="#E7DFA1"/>
+  <!-- sketchy orbit -->
+  <path d="M103 183c21-17 36-22 53-24M326 154c17 4 33 14 47 27" stroke="#C9B85E" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 8"/>
+</svg>
