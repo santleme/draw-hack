@@ -325,8 +325,17 @@ def data_kind(name):
 
 
 def test_point(name, accession):
+    """Extract the run/test-point designator from a raw filename.
+
+    Real formats seen in the corpus: C13M103 / C05M201 (CIR-style),
+    305F003 / D033E08 / A158R14 (letter+digits), 19189A1 / 21301A9 / 22024K2
+    (5 digits + letter + digit), FLEX-159, plain 19189. `search` (not
+    `match`) so ids embedded in names like `as run21301A9` are still found.
+    """
     base = re.sub(r"^PSI-\d+_Raw Data_", "", name)
-    m = re.match(r"([A-Z]?\d{3,5}[A-Z]\d{2}[A-Z]?|FLEX-?\d+|LCTF\d+[A-Z]?|\d{5})", base)
+    m = re.search(
+        r"([A-Z]?\d{2,5}[A-Z]\d{1,3}[A-Z]?|FLEX-?\d+|LCTF\d+[A-Z]?|\d{5})",
+        base)
     return m.group(1) if m else ""
 
 
