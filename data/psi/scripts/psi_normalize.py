@@ -362,22 +362,29 @@ def extract_xlsx(path, acc, rel):
 
     out_dir = os.path.join(OUT_DIR, "xlsx_csv", acc)
     stem = re.sub(r"[^A-Za-z0-9_.-]+", "_", os.path.splitext(os.path.basename(path))[0])
+    marker = os.path.join(out_dir, stem + ".done")
     written = []
-    if os.path.isdir(out_dir):
-        # resume: sheets already exported -> recount rows, skip the workbook
-        existing = [f for f in os.listdir(out_dir) if f.startswith(stem + "__")]
-        if existing:
-            for f in existing:
+    if (os.path.exists(marker)
+            and os.path.getmtime(marker) >= os.path.getmtime(path)):
+        # fully exported before and source unchanged -> recount, skip
+        for f in sorted(os.listdir(out_dir)):
+            if f.startswith(stem + "__"):
                 dest = os.path.join(out_dir, f)
                 with open(dest, "rb") as fh:
-                    written.append((dest, max(0, sum(1 for _ in fh) - 0)))
-            return written
+                    written.append((dest, sum(1 for _ in fh)))
+        return written
+    # interrupted export or newer source workbook -> clear and re-export
+    if os.path.isdir(out_dir):
+        for f in os.listdir(out_dir):
+            if f.startswith(stem + "__") or f == stem + ".done":
+                os.remove(os.path.join(out_dir, f))
     try:
         wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
     except Exception as e:  # noqa: BLE001
         print(f"  xlsx error {rel}: {e}")
         return written
-    for sheet in wb.sheetnames:
+    sheet_names = list(wb.sheetnames)
+    for sheet in sheet_names:
         ws = wb[sheet]
         if not hasattr(ws, "iter_rows"):  # chartsheet - nothing to export
             continue
@@ -397,6 +404,9 @@ def extract_xlsx(path, acc, rel):
         else:
             os.remove(dest)
     wb.close()
+    os.makedirs(out_dir, exist_ok=True)
+    with open(marker, "w") as fh:  # complete-export marker for resume
+        fh.write("\n".join(sorted(sheet_names)))
     return written
 
 
