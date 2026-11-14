@@ -70,8 +70,10 @@ COLUMN_MAP = [
     ("o initial ambient", "o2_mf_raw"),
     ("ambient gas", "gas_mixture_raw"),
     ("atmosphere", "gas_mixture_raw"),
-    # -- fuel / sample identity (mfc before fuel: "Fuel MFC" is a setpoint)
+    # -- fuel / sample identity (mfc and mass-flow before fuel: "Fuel MFC"
+    #    is a setpoint and "mfuel (mg/s)" is a flow rate, not a fuel name)
     ("mfc", "mfc_raw"),
+    ("mg/s", "mass_flow_mg_s_raw"),
     ("fuel bottle", "fuel_bottle"),
     ("fuel conc", "fuel_mf_raw"),
     ("xfuel", "fuel_mf_raw"),
@@ -121,7 +123,6 @@ COLUMN_MAP = [
     ("=test", "data_id"),
     ("zst", "zst"),
     ("tfp", "tfp"),
-    ("mg/s", "mass_flow_mg_s_raw"),
     # -- dates / bookkeeping
     ("year", "year_raw"),
     ("month", "month_raw"),
