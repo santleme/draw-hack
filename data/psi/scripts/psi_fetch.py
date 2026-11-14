@@ -160,6 +160,7 @@ def main():
 
     manifest_rows = []
     tasks = []
+    seen = set()  # the listing can return duplicate keys
     for acc in args.accessions.split(","):
         version, tree = latest_version(acc)
         nodes = walk(tree.get("files", []), [])
@@ -167,6 +168,9 @@ def main():
         total = sum(n.get("bytes_size") or 0 for n in chosen)
         print(f"{acc}: version={version} files={len(chosen)} {total/1e6:.0f} MB")
         for n in chosen:
+            if (acc, n.get("key")) in seen:
+                continue
+            seen.add((acc, n.get("key")))
             tasks.append((acc, version, n))
             manifest_rows.append({
                 "accession": acc,
@@ -178,6 +182,7 @@ def main():
                 "size_bytes": n.get("bytes_size"),
                 "updated": n.get("updated"),
                 "local_path": os.path.relpath(dest_path(acc, n["key"]), os.path.abspath(os.path.join(HERE, ".."))),
+                "status": "pending",
             })
 
     if args.dry_run:
@@ -185,26 +190,46 @@ def main():
     tasks.sort(key=lambda t: t[2].get("bytes_size") or 0)
     errors = []
     done = 0
+    status_by_key = {}
     with ThreadPoolExecutor(max_workers=WORKERS) as ex:
-        futs = [ex.submit(fetch_one, a, v, n) for a, v, n in tasks]
+        futs = {ex.submit(fetch_one, a, v, n): (a, n) for a, v, n in tasks}
         for fu in as_completed(futs):
+            acc_n, node = futs[fu]
             done += 1
             try:
-                fu.result()
+                _dest, _how = fu.result()
+                size = node.get("bytes_size") or 0
+                status = ("downloaded" if os.path.getsize(dest_path(acc_n, node["key"])) == size
+                          else "downloaded_size_differs")
             except Exception as e:  # noqa: BLE001 - record and continue
+                status = f"error: {e}"
                 errors.append(str(e))
+            status_by_key[node["key"]] = status
             if done % 500 == 0:
                 print(f"{done}/{len(tasks)} done, errors={len(errors)}", flush=True)
     for e in errors:
         print("ERROR:", e, file=sys.stderr)
 
+    for r in manifest_rows:
+        r["status"] = status_by_key.get(r["key"], "pending")
+
     os.makedirs(CATALOG_DIR, exist_ok=True)
     out = os.path.join(CATALOG_DIR, "files_manifest.csv")
+    # merge: keep catalogue rows for accessions not refreshed in this run
+    new_keys = {(r["accession"], r["key"]) for r in manifest_rows}
+    merged = manifest_rows
+    if os.path.exists(out):
+        with open(out, newline="") as fh:
+            for row in csv.DictReader(fh):
+                if (row["accession"], row["key"]) not in new_keys:
+                    merged.append(row)
+    fieldnames = ["accession", "version", "file_id", "category", "key",
+                  "name", "size_bytes", "updated", "local_path", "status"]
     with open(out, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(manifest_rows[0].keys()))
+        w = csv.DictWriter(fh, fieldnames=fieldnames, extrasaction="ignore")
         w.writeheader()
-        w.writerows(manifest_rows)
-    print(f"wrote {out} ({len(manifest_rows)} rows)")
+        w.writerows(merged)
+    print(f"wrote {out} ({len(merged)} rows)")
 
 
 if __name__ == "__main__":
