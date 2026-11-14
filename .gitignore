@@ -8,3 +8,5 @@ replit.nix
 .env*
 !.env.example
 .vercel
+data/psi/raw/
+data/psi/processed/xlsx_csv/
