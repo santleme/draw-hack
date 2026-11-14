@@ -334,8 +334,10 @@ def test_point(name, accession):
     `match`) so ids embedded in names like `as run21301A9` are still found.
     """
     base = re.sub(r"^PSI-\d+_Raw Data_", "", name)
+    # digit-boundaries keep the id from matching inside longer number runs
+    # (timestamps like 20200613 / 140101 in log filenames)
     m = re.search(
-        r"([A-Z]?\d{2,5}[A-Z]\d{1,3}[A-Z]?|FLEX-?\d+|LCTF\d+[A-Z]?|\d{5})",
+        r"(?<!\d)([A-Z]?\d{2,5}[A-Z]\d{1,3}[A-Z]?|FLEX-?\d+|LCTF\d+[A-Z]?|\d{5})(?!\d)",
         base)
     return m.group(1) if m else ""
 
